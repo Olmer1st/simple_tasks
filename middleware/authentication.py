@@ -1,0 +1,2 @@
+def checkToken():
+    return False
