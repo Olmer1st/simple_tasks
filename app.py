@@ -5,9 +5,9 @@ from flask import Flask, render_template
 # template_dir = os.path.join(template_dir, 'public')
 app = Flask(__name__, template_folder='public', static_folder='public')
 
-
-@app.route('/')
-def main():
+@app.route('/', defaults={'p': 'home'})
+@app.route('/<path:p>')
+def main(p):
     return render_template('index.html')
 
 

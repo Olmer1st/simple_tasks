@@ -25,3 +25,7 @@ body{
 .pointer{
     cursor: pointer;
 }
+
+.nolisttype{
+    list-style-type: none !important;
+}

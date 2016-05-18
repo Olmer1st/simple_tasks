@@ -1,6 +1,12 @@
 "use strict";
 main_app.controller("adminController", function($scope, $rootScope, $location) {
-    $scope.media = {
+    $scope.mediaTree = {
+        selected:{
+            channels:null,
+            mcc:null,
+            accounts:null,
+            campaigns:null
+        },
         accordions:[{
             name: "channels",
             title: "Channels",
@@ -58,5 +64,12 @@ main_app.controller("adminController", function($scope, $rootScope, $location) {
                 { name: "TestCampaign12", accountId:"a6" , campaignId:"c12"}]
         }
 
+    };
+
+    $scope.getChannelsFilter = function(){
+        if($scope.mediaTree.selected.channels){
+            return $scope.mediaTree.selected.channels.channelId;
+        }
+        return null;
     };
 });

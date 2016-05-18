@@ -1,12 +1,18 @@
  <div class="container">
         <uib-accordion>
-            <uib-accordion-group is-open="accordion.status.open" ng-repeat="accordion in media.accordions">
+            <uib-accordion-group is-open="accordion.status.open" ng-repeat="accordion in mediaTree.accordions">
                 <uib-accordion-heading>
-                    {{accordion.title}}
-                    <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': category.status.open, 'glyphicon-chevron-right': !category.status.open}"></i>
+                    {{mediaTree.selected[accordion.name]?mediaTree.selected[accordion.name].name + ' (' + accordion.title + ')':accordion.title}}
+                    <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': accordion.status.open, 'glyphicon-chevron-right': !accordion.status.open}"></i>
                 </uib-accordion-heading>
-                This is just some content to illustrate fancy headings.
+                <ul class="nolisttype">
+                    <li ng-if="accordion.name=='channels'" ng-repeat="media in mediaTree.data[accordion.name]" >
+                        <button class="btn btn-link" ng-click="mediaTree.selected[accordion.name]=media">{{media.name}}</button>
+                    </li>
+                    <li ng-if="accordion.name=='mcc' && mediaTree.selected.channels" ng-repeat="media in mediaTree.data[accordion.name] | {channelId: getChannelsFilter()}" >
+                        <button class="btn btn-link" ng-click="mediaTree.selected[accordion.name]=media">{{media.name}}</button>
+                    </li>
+                </ul>
             </uib-accordion-group>
         </uib-accordion>
  </div>
-
