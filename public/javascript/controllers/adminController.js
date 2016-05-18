@@ -72,4 +72,16 @@ main_app.controller("adminController", function($scope, $rootScope, $location) {
         }
         return null;
     };
+    $scope.getMCCFilter = function(){
+        if($scope.mediaTree.selected.mcc){
+            return $scope.mediaTree.selected.mcc.mccId;
+        }
+        return null;
+    };
+    $scope.getAccountsFilter = function(){
+        if($scope.mediaTree.selected.accounts){
+            return $scope.mediaTree.selected.accounts.accountId;
+        }
+        return null;
+    };
 });

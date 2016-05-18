@@ -9,7 +9,13 @@
                     <li ng-if="accordion.name=='channels'" ng-repeat="media in mediaTree.data[accordion.name]" >
                         <button class="btn btn-link" ng-click="mediaTree.selected[accordion.name]=media">{{media.name}}</button>
                     </li>
-                    <li ng-if="accordion.name=='mcc' && mediaTree.selected.channels" ng-repeat="media in mediaTree.data[accordion.name] | {channelId: getChannelsFilter()}" >
+                    <li ng-if="accordion.name=='mcc' && mediaTree.selected.channels" ng-repeat="media in mediaTree.data[accordion.name] | filter: {channelId:getChannelsFilter()}" >
+                        <button class="btn btn-link" ng-click="mediaTree.selected[accordion.name]=media">{{media.name}}</button>
+                    </li>
+                    <li ng-if="accordion.name=='accounts' && mediaTree.selected.mcc" ng-repeat="media in mediaTree.data[accordion.name] | filter: {mccId:getMCCFilter()}" >
+                        <button class="btn btn-link" ng-click="mediaTree.selected[accordion.name]=media">{{media.name}}</button>
+                    </li>
+                    <li ng-if="accordion.name=='campaigns' && mediaTree.selected.channels" ng-repeat="media in mediaTree.data[accordion.name] | filter: {accountId:getAccountsFilter()}" >
                         <button class="btn btn-link" ng-click="mediaTree.selected[accordion.name]=media">{{media.name}}</button>
                     </li>
                 </ul>
