@@ -1,0 +1,12 @@
+ <div class="container">
+        <uib-accordion>
+            <uib-accordion-group is-open="accordion.status.open" ng-repeat="accordion in media.accordions">
+                <uib-accordion-heading>
+                    {{accordion.title}}
+                    <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': category.status.open, 'glyphicon-chevron-right': !category.status.open}"></i>
+                </uib-accordion-heading>
+                This is just some content to illustrate fancy headings.
+            </uib-accordion-group>
+        </uib-accordion>
+ </div>
+
