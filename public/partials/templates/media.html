@@ -1,24 +1,28 @@
- <div class="container">
-        <uib-accordion>
-            <uib-accordion-group is-open="accordion.status.open" ng-repeat="accordion in mediaTree.accordions">
-                <uib-accordion-heading>
-                    {{mediaTree.selected[accordion.name]?mediaTree.selected[accordion.name].name + ' (' + accordion.title + ')':accordion.title}}
-                    <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': accordion.status.open, 'glyphicon-chevron-right': !accordion.status.open}"></i>
-                </uib-accordion-heading>
-                <ul class="nolisttype">
-                    <li ng-if="accordion.name=='channels'" ng-repeat="media in mediaTree.data[accordion.name]" >
-                        <button class="btn btn-link" ng-click="mediaTree.selected[accordion.name]=media">{{media.name}}</button>
-                    </li>
-                    <li ng-if="accordion.name=='mcc' && mediaTree.selected.channels" ng-repeat="media in mediaTree.data[accordion.name] | filter: {channelId:getChannelsFilter()}" >
-                        <button class="btn btn-link" ng-click="mediaTree.selected[accordion.name]=media">{{media.name}}</button>
-                    </li>
-                    <li ng-if="accordion.name=='accounts' && mediaTree.selected.mcc" ng-repeat="media in mediaTree.data[accordion.name] | filter: {mccId:getMCCFilter()}" >
-                        <button class="btn btn-link" ng-click="mediaTree.selected[accordion.name]=media">{{media.name}}</button>
-                    </li>
-                    <li ng-if="accordion.name=='campaigns' && mediaTree.selected.channels" ng-repeat="media in mediaTree.data[accordion.name] | filter: {accountId:getAccountsFilter()}" >
-                        <button class="btn btn-link" ng-click="mediaTree.selected[accordion.name]=media">{{media.name}}</button>
-                    </li>
-                </ul>
-            </uib-accordion-group>
-        </uib-accordion>
- </div>
+<div class="container">
+    <uib-accordion>
+        <uib-accordion-group is-open="accordion.status.open" ng-repeat="accordion in mediaTree.accordions">
+            <uib-accordion-heading>
+                {{getAccordionTitle(accordion)}}
+                <i class="pull-right glyphicon"
+                   ng-class="{'glyphicon-chevron-down': accordion.status.open, 'glyphicon-chevron-right': !accordion.status.open}"></i>
+            </uib-accordion-heading>
+            <div style="height: 200px;overflow-y: auto;">
+                <div ng-if="accordion.name=='channels'" ng-repeat="media in mediaTree.data[accordion.name]">
+                    <button class="btn btn-link" ng-click="changeEntity(accordion, media)">{{media.name}}</button>
+                </div>
+                <div ng-if="accordion.name=='mccs' && mediaTree.selected.channel"
+                     ng-repeat="media in mediaTree.data[accordion.name] | filter: getMediaFilter('channels')">
+                    <button class="btn btn-link" ng-click="changeEntity(accordion, media)">{{media.name}}</button>
+                </div>
+                <div ng-if="accordion.name=='accounts' && mediaTree.selected.mcc"
+                     ng-repeat="media in mediaTree.data[accordion.name] | filter:getMediaFilter('mccs')">
+                    <button class="btn btn-link" ng-click="changeEntity(accordion, media)">{{media.name}}</button>
+                </div>
+                <div ng-if="accordion.name=='campaigns' && mediaTree.selected.account"
+                     ng-repeat="media in mediaTree.data[accordion.name] | filter: getMediaFilter('accounts')">
+                    <button class="btn btn-link" ng-click="changeEntity(accordion, media)">{{media.name}}</button>
+                </div>
+            </div>
+        </uib-accordion-group>
+    </uib-accordion>
+</div>

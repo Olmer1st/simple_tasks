@@ -2,86 +2,213 @@
 main_app.controller("adminController", function($scope, $rootScope, $location) {
     $scope.mediaTree = {
         selected:{
-            channels:null,
+            channel:null,
             mcc:null,
-            accounts:null,
-            campaigns:null
+            account:null,
+            campaign:null,
         },
         accordions:[{
             name: "channels",
-            title: "Channels",
+            title: "Channel",
             status: {
                 open: false
             }
         }, {
-            name: "mcc",
+            name: "mccs",
             title: "MCC",
             status: {
                 open: false
             }
         }, {
             name: "accounts",
-            title: "Accounts",
+            title: "Account",
             status: {
                 open: false
             }
         }, {
             name: "campaigns",
-            title: "Campaigns",
+            title: "Campaign",
             status: {
                 open: false
             }
         }],
         data: {
             channels: [
-                { name: "Google", channelId: "google" },
-                { name: "Facebook", channelId: "facebook" }
+                { name: "Google", entityId: "google" },
+                { name: "Facebook", entityId: "facebook" }
             ],
-            mcc:[
-                { name: "All", channelId: "google", mccId: "m01"},
-                { name: "All", channelId: "facebook", mccId: "m02" },
-                { name: "Podium", channelId: "google", mccId: "m1" },
-                { name: "Blik", channelId: "google", mccId: "m2" }
+            mccs:[
+                { name: "All", parentId: "google", entityId: "m01"},
+                { name: "All", parentId: "facebook", entityId: "m02" },
+                { name: "Podium", parentId: "google", entityId: "m1" },
+                { name: "Blik", parentId: "google", entityId: "m2" }
             ],
-            accounts:[  { name: "TestAccount1",  mccId: "m01", accountId:"a1"},
-                { name: "TestAccount2", mccId: "m01", accountId:"a2" },
-                { name: "TestAccount3", mccId: "m1", accountId:"a3" },
-                { name: "TestAccount31", mccId: "m1", accountId:"a4" },
-                { name: "TestAccount4", mccId: "m2", accountId:"a5" },
-                { name: "TestAccount44", mccId: "m2", accountId:"a6" }
+            accounts:[  { name: "TestAccount1",  parentId: "m01", entityId:"a1"},
+                { name: "TestAccount2", parentId: "m01", entityId:"a2" },
+                { name: "TestAccount3", parentId: "m1", entityId:"a3" },
+                { name: "TestAccount31", parentId: "m1", entityId:"a4" },
+                { name: "TestAccount4", parentId: "m2", entityId:"a5" },
+                { name: "TestAccount44", parentId: "m2", entityId:"a6" }
             ],
-            campaigns:[{ name: "TestCampaign1",  accountId:"a1", campaignId:"c1"},
-                { name: "TestCampaign2", accountId:"a2", campaignId:"c2" },
-                { name: "TestCampaign3", accountId:"a3", campaignId:"c3" },
-                { name: "TestCampaign4", accountId:"a4" , campaignId:"c4"},
-                { name: "TestCampaign5", accountId:"a5", campaignId:"c5" },
-                { name: "TestCampaign6", accountId:"a6" , campaignId:"c6"},
-                { name: "TestCampaign7",  accountId:"a1", campaignId:"c7"},
-                { name: "TestCampaign8", accountId:"a2", campaignId:"c8" },
-                { name: "TestCampaign9", accountId:"a3", campaignId:"c9" },
-                { name: "TestCampaign10", accountId:"a4" , campaignId:"c10"},
-                { name: "TestCampaign11", accountId:"a5", campaignId:"c11" },
-                { name: "TestCampaign12", accountId:"a6" , campaignId:"c12"}]
+            campaigns:[{ name: "TestCampaign1",  parentId:"a1", entityId:"c1"},
+                { name: "TestCampaign2", parentId:"a2", entityId:"c2" },
+                { name: "TestCampaign3", parentId:"a3", entityId:"c3" },
+                { name: "TestCampaign4", parentId:"a4" , entityId:"c4"},
+                { name: "TestCampaign5", parentId:"a5", entityId:"c5" },
+                { name: "TestCampaign6", parentId:"a6" , entityId:"c6"},
+                { name: "TestCampaign7",  parentId:"a1", entityId:"c7"},
+                { name: "TestCampaign8", parentId:"a2", entityId:"c8" },
+                { name: "TestCampaign9", parentId:"a3", entityId:"c9" },
+                { name: "TestCampaign10", parentId:"a4" , entityId:"c10"},
+                { name: "TestCampaign11", parentId:"a5", entityId:"c11" },
+                { name: "TestCampaign12", parentId:"a6" , entityId:"c12"},
+                { name: "TestCampaign2", parentId:"a2", entityId:"c2" },
+                { name: "TestCampaign3", parentId:"a3", entityId:"c3" },
+                { name: "TestCampaign4", parentId:"a4" , entityId:"c4"},
+                { name: "TestCampaign5", parentId:"a5", entityId:"c5" },
+                { name: "TestCampaign6", parentId:"a6" , entityId:"c6"},
+                { name: "TestCampaign7",  parentId:"a1", entityId:"c7"},
+                { name: "TestCampaign8", parentId:"a2", entityId:"c8" },
+                { name: "TestCampaign9", parentId:"a3", entityId:"c9" },
+                { name: "TestCampaign10", parentId:"a4" , entityId:"c10"},
+                { name: "TestCampaign11", parentId:"a5", entityId:"c11" },
+                { name: "TestCampaign12", parentId:"a6" , entityId:"c12"},
+                { name: "TestCampaign2", parentId:"a2", entityId:"c2" },
+                { name: "TestCampaign3", parentId:"a3", entityId:"c3" },
+                { name: "TestCampaign4", parentId:"a4" , entityId:"c4"},
+                { name: "TestCampaign5", parentId:"a5", entityId:"c5" },
+                { name: "TestCampaign6", parentId:"a6" , entityId:"c6"},
+                { name: "TestCampaign7",  parentId:"a1", entityId:"c7"},
+                { name: "TestCampaign8", parentId:"a2", entityId:"c8" },
+                { name: "TestCampaign9", parentId:"a3", entityId:"c9" },
+                { name: "TestCampaign10", parentId:"a4" , entityId:"c10"},
+                { name: "TestCampaign11", parentId:"a5", entityId:"c11" },
+                { name: "TestCampaign12", parentId:"a6" , entityId:"c12"},
+             { name: "TestCampaign2", parentId:"a2", entityId:"c2" },
+                { name: "TestCampaign3", parentId:"a3", entityId:"c3" },
+                { name: "TestCampaign4", parentId:"a4" , entityId:"c4"},
+                { name: "TestCampaign5", parentId:"a5", entityId:"c5" },
+                { name: "TestCampaign6", parentId:"a6" , entityId:"c6"},
+                { name: "TestCampaign7",  parentId:"a1", entityId:"c7"},
+                { name: "TestCampaign8", parentId:"a2", entityId:"c8" },
+                { name: "TestCampaign9", parentId:"a3", entityId:"c9" },
+                { name: "TestCampaign10", parentId:"a4" , entityId:"c10"},
+                { name: "TestCampaign11", parentId:"a5", entityId:"c11" },
+                { name: "TestCampaign12", parentId:"a6" , entityId:"c12"},
+                { name: "TestCampaign2", parentId:"a2", entityId:"c2" },
+                { name: "TestCampaign3", parentId:"a3", entityId:"c3" },
+                { name: "TestCampaign4", parentId:"a4" , entityId:"c4"},
+                { name: "TestCampaign5", parentId:"a5", entityId:"c5" },
+                { name: "TestCampaign6", parentId:"a6" , entityId:"c6"},
+                { name: "TestCampaign7",  parentId:"a1", entityId:"c7"},
+                { name: "TestCampaign8", parentId:"a2", entityId:"c8" },
+                { name: "TestCampaign9", parentId:"a3", entityId:"c9" },
+                { name: "TestCampaign10", parentId:"a4" , entityId:"c10"},
+                { name: "TestCampaign11", parentId:"a5", entityId:"c11" },
+                { name: "TestCampaign12", parentId:"a6" , entityId:"c12"},
+                { name: "TestCampaign2", parentId:"a2", entityId:"c2" },
+                { name: "TestCampaign3", parentId:"a3", entityId:"c3" },
+                { name: "TestCampaign4", parentId:"a4" , entityId:"c4"},
+                { name: "TestCampaign5", parentId:"a5", entityId:"c5" },
+                { name: "TestCampaign6", parentId:"a6" , entityId:"c6"},
+                { name: "TestCampaign7",  parentId:"a1", entityId:"c7"},
+                { name: "TestCampaign8", parentId:"a2", entityId:"c8" },
+                { name: "TestCampaign9", parentId:"a3", entityId:"c9" },
+                { name: "TestCampaign10", parentId:"a4" , entityId:"c10"},
+                { name: "TestCampaign11", parentId:"a5", entityId:"c11" },
+                { name: "TestCampaign12", parentId:"a6" , entityId:"c12"},
+             { name: "TestCampaign2", parentId:"a2", entityId:"c2" },
+                { name: "TestCampaign3", parentId:"a3", entityId:"c3" },
+                { name: "TestCampaign4", parentId:"a4" , entityId:"c4"},
+                { name: "TestCampaign5", parentId:"a5", entityId:"c5" },
+                { name: "TestCampaign6", parentId:"a6" , entityId:"c6"},
+                { name: "TestCampaign7",  parentId:"a1", entityId:"c7"},
+                { name: "TestCampaign8", parentId:"a2", entityId:"c8" },
+                { name: "TestCampaign9", parentId:"a3", entityId:"c9" },
+                { name: "TestCampaign10", parentId:"a4" , entityId:"c10"},
+                { name: "TestCampaign11", parentId:"a5", entityId:"c11" },
+                { name: "TestCampaign12", parentId:"a6" , entityId:"c12"},
+                { name: "TestCampaign2", parentId:"a2", entityId:"c2" },
+                { name: "TestCampaign3", parentId:"a3", entityId:"c3" },
+                { name: "TestCampaign4", parentId:"a4" , entityId:"c4"},
+                { name: "TestCampaign5", parentId:"a5", entityId:"c5" },
+                { name: "TestCampaign6", parentId:"a6" , entityId:"c6"},
+                { name: "TestCampaign7",  parentId:"a1", entityId:"c7"},
+                { name: "TestCampaign8", parentId:"a2", entityId:"c8" },
+                { name: "TestCampaign9", parentId:"a3", entityId:"c9" },
+                { name: "TestCampaign10", parentId:"a4" , entityId:"c10"},
+                { name: "TestCampaign11", parentId:"a5", entityId:"c11" },
+                { name: "TestCampaign12", parentId:"a6" , entityId:"c12"},
+                { name: "TestCampaign2", parentId:"a2", entityId:"c2" },
+                { name: "TestCampaign3", parentId:"a3", entityId:"c3" },
+                { name: "TestCampaign4", parentId:"a4" , entityId:"c4"},
+                { name: "TestCampaign5", parentId:"a5", entityId:"c5" },
+                { name: "TestCampaign6", parentId:"a6" , entityId:"c6"},
+                { name: "TestCampaign7",  parentId:"a1", entityId:"c7"},
+                { name: "TestCampaign8", parentId:"a2", entityId:"c8" },
+                { name: "TestCampaign9", parentId:"a3", entityId:"c9" },
+                { name: "TestCampaign10", parentId:"a4" , entityId:"c10"},
+                { name: "TestCampaign11", parentId:"a5", entityId:"c11" },
+                { name: "TestCampaign12", parentId:"a6" , entityId:"c12"}]
         }
 
     };
-
-    $scope.getChannelsFilter = function(){
-        if($scope.mediaTree.selected.channels){
-            return $scope.mediaTree.selected.channels.channelId;
+    $scope.getMediaFilter = function (parentName) {
+        var media = null;
+        switch (parentName){
+            case "channels":
+                media = $scope.mediaTree.selected.channel;
+                break;
+            case "mccs":
+                media = $scope.mediaTree.selected.mcc;
+                break;
+            case "accounts":
+                media = $scope.mediaTree.selected.account;
+                break;
+        }
+        if(media){
+            return {parentId: media.entityId};
         }
         return null;
     };
-    $scope.getMCCFilter = function(){
-        if($scope.mediaTree.selected.mcc){
-            return $scope.mediaTree.selected.mcc.mccId;
+    $scope.getAccordionTitle = function (accordion) {
+        if(!accordion) return "No Title";
+        var media = null;
+        switch (accordion.name){
+            case "channels":
+                media = $scope.mediaTree.selected.channel;
+                break;
+            case "mccs":
+                media = $scope.mediaTree.selected.mcc;
+                break;
+            case "accounts":
+                media = $scope.mediaTree.selected.account;
+                break;
+             case "campaigns":
+                media = $scope.mediaTree.selected.campaign;
+                break;
         }
-        return null;
+        if(media){
+            return  media.name + ' (' + accordion.title + ')';
+        }
+        return accordion.title;
     };
-    $scope.getAccountsFilter = function(){
-        if($scope.mediaTree.selected.accounts){
-            return $scope.mediaTree.selected.accounts.accountId;
+    $scope.changeEntity = function (accordion, media) {
+        if(!accordion || !media) return;
+         switch (accordion.name){
+            case "channels":
+                $scope.mediaTree.selected.channel = media;
+                break;
+            case "mccs":
+                $scope.mediaTree.selected.mcc = media;
+                break;
+            case "accounts":
+                $scope.mediaTree.selected.account = media;
+                break;
+             case "campaigns":
+                $scope.mediaTree.selected.campaign= media;
+                break;
         }
-        return null;
+        accordion.status.open = false;
     };
 });
