@@ -1,0 +1,38 @@
+<style type="text/css">
+    .selectedNode {
+        background-color: #d3d3d3;
+    }
+
+    .mouseOverNode {
+        background-color: #E6E6FA;
+    }
+</style>
+<table style="width:100%;">
+    <thead>
+    <tr>
+        <th style="width: 5%;"></th>
+        <th style="width: 60%;">Name</th>
+        <th style="width: 30%;">Type</th>
+        <th>ID</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr  ng-class="{'mouseOverNode':media.hover, 'selectedNode': media.selected}" ng-repeat="media in medias"
+         ng-mouseover="media.hover=true" ng-mouseleave="media.hover=false" ng-if="!media.hidden">
+        <td>
+            <div style="display: inline-block;">
+                <span ng-if="media.hasChildren" ng-click="collapse(media)" class="pointer glyphicon" ng-class="!isChildrenHidden(media)?'glyphicon-minus':'glyphicon-plus'"></span>
+            </div>
+        </td>
+        <td>
+            <div class="pointer" ng-click="makeSelection(media)" ng-style="{'margin-left': (media.level * 15).toString() + 'px'}">{{media.name}}</div>
+        </td>
+        <td>
+            <div>{{media.type}}</div>
+        </td>
+        <td>
+            <div>{{media._id}}</div>
+        </td>
+    </tr>
+    </tbody>
+</table>
